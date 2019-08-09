@@ -1,26 +1,44 @@
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
+const { RichText } = wp.editor;
 
 registerBlockType( 'gtcb-blocks/custom-block', {
+
+	title: __( 'Custom Block', 'custom-blocks' ),
+	icon: 'megaphone',
+	category: 'common',
 
 	attributes: {
 		fullName: {
 			type: 'array',
 			source: 'children',
-			selector: 'p'
+			selector: 'div'
 		},
 	},
 
-	title: __( 'Custom Block', 'gutenberg-workshop' ),
-	icon: 'megaphone',
-	category: 'common',
-
 	edit: ( props ) => {
-		let { attributes , setAttributes, className } = props;
-
-		const onChangeFullName = ( event ) => ( setAttributes( { fullName: event.target.value } ) );
-
-		return ( <p onChange={ onChangeFullName }/>{ attributes.fullName }</p> );
+		console.warn( 'props.attributes.fullName', props.attributes.fullName );
+		let { attributes: { fullName } , setAttributes, className } = props;
+		return (
+			<RichText
+				tagName="div"
+				placeholder={ __( 'Full Name', 'custom-blocks' ) }
+				value={ fullName }
+				onChange={ ( value ) => setAttributes( { fullName: value } ) }
+				className={ className }
+			/>
+		)
 	},
-	save: () => ( <div>Hello World</div> )
+	save: ( props ) => {
+		console.warn( 'save', props );
+		let { attributes: { fullName }, className } = props;
+		return (
+			<RichText.Content
+				tagName="div"
+				value={ fullName }
+				className={ className }
+			/>
+		)
+	}
+
 } );

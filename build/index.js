@@ -85,15 +85,44 @@ __webpack_require__.r(__webpack_exports__);
 
 var __ = wp.i18n.__;
 var registerBlockType = wp.blocks.registerBlockType;
+var RichText = wp.editor.RichText;
 registerBlockType('gtcb-blocks/custom-block', {
-  title: __('Custom Block', 'gutenberg-workshop'),
+  title: __('Custom Block', 'custom-blocks'),
   icon: 'megaphone',
   category: 'common',
-  edit: function edit() {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, "Hello World");
+  attributes: {
+    fullName: {
+      type: 'array',
+      source: 'children',
+      selector: 'div'
+    }
   },
-  save: function save() {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, "Hello World");
+  edit: function edit(props) {
+    console.warn('props.attributes.fullName', props.attributes.fullName);
+    var fullName = props.attributes.fullName,
+        setAttributes = props.setAttributes,
+        className = props.className;
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(RichText, {
+      tagName: "div",
+      placeholder: __('Full Name', 'custom-blocks'),
+      value: fullName,
+      onChange: function onChange(value) {
+        return setAttributes({
+          fullName: value
+        });
+      },
+      className: className
+    });
+  },
+  save: function save(props) {
+    console.warn('save', props);
+    var fullName = props.attributes.fullName,
+        className = props.className;
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(RichText.Content, {
+      tagName: "div",
+      value: fullName,
+      className: className
+    });
   }
 });
 

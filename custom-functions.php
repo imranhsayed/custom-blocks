@@ -9,15 +9,15 @@ function register_block() {
 	wp_register_style(
 		'gtcb-block-front-end-styles',
 		GTCB_BLOCKS_URL . '/src/style.css',
-		array( 'wp-edit-blocks' ),
+		[],
 		filemtime( GTCB_BLOCKS_PATH . '/src/style.css' )
 	);
 
 	// Block editor styles.
 	wp_register_style(
 		'gtcb-block-editor-styles',
-		GTCB_BLOCKS_URL . '/dynamic-block/assets/editor.css',
-		array( 'wp-edit-blocks' ),
+		GTCB_BLOCKS_URL . '/src/editor.css',
+		['wp-edit-blocks'],
 		filemtime( GTCB_BLOCKS_PATH . '/src/editor.css' )
 	);
 
